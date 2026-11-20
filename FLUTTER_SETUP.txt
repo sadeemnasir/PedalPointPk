@@ -1,0 +1,1 @@
+This is a complete Flutter source folder. If Flutter reports missing generated platform files, run `flutter create .` inside this folder, then `flutter pub get` and `flutter run -d chrome`.
