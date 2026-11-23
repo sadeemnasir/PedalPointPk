@@ -228,7 +228,8 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
                 decoration: BoxDecoration(
                   color: Colors.white.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(30),
@@ -285,7 +286,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 searchDate: searchDate,
                 cities: cities,
                 categories: categories,
-                onCity: (v) => setState(() => cityFilter = v == 'All Pakistan Cities' ? 'All' : v),
+                onCity: (v) => setState(
+                    () => cityFilter = v == 'All Pakistan Cities' ? 'All' : v),
                 onCategory: (v) => setState(() => categoryFilter = v),
                 onDate: _pickSearchDate,
                 onSearch: _applySearch,
@@ -311,11 +313,16 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _FleetSection() {
     final width = MediaQuery.sizeOf(context).width;
-    final columns = width >= 1050 ? 3 : width >= 700 ? 2 : 1;
+    final columns = width >= 1050
+        ? 3
+        : width >= 700
+            ? 2
+            : 1;
 
     return Container(
       color: const Color(0xFFF8FAFC),
-      padding: EdgeInsets.fromLTRB(18, compactPad(context), 18, compactPad(context) + 8),
+      padding: EdgeInsets.fromLTRB(
+          18, compactPad(context), 18, compactPad(context) + 8),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1180),
@@ -337,7 +344,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         selectedColor: const Color(0xFF0175C2),
                         showCheckmark: false,
                         labelStyle: TextStyle(
-                          color: active ? Colors.white : const Color(0xFF475569),
+                          color:
+                              active ? Colors.white : const Color(0xFF475569),
                           fontWeight: FontWeight.w700,
                           fontSize: 12,
                         ),
@@ -370,7 +378,8 @@ class _HomeScreenState extends State<HomeScreen> {
               if (cityFilter != 'All') ...[
                 const SizedBox(height: 22),
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 14, vertical: 10),
                   decoration: BoxDecoration(
                     color: const Color(0xFFEFF8FF),
                     borderRadius: BorderRadius.circular(12),
@@ -378,7 +387,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.filter_alt_outlined, size: 16, color: Color(0xFF0175C2)),
+                      const Icon(Icons.filter_alt_outlined,
+                          size: 16, color: Color(0xFF0175C2)),
                       const SizedBox(width: 8),
                       Expanded(
                         child: Text(
@@ -540,65 +550,81 @@ class _Header extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.sizeOf(context).width;
     final wide = screenWidth >= 1100;
-    final tiny = screenWidth < 400;
+    final compactMobile = screenWidth < 460;
 
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: tiny ? 10 : 18),
+      padding: EdgeInsets.symmetric(horizontal: compactMobile ? 10 : 18),
       child: Row(
         children: [
           Flexible(
             child: InkWell(
-            onTap: onHome,
-            child: Row(
-              children: [
-                Container(
-                  width: tiny ? 38 : 44,
-                  height: tiny ? 38 : 44,
-                  decoration: const BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(14)),
-                    gradient: LinearGradient(
-                      colors: [Color(0xFF02569B), Color(0xFF0175C2), Color(0xFF00B4AB)],
+              borderRadius: BorderRadius.circular(14),
+              onTap: onHome,
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Container(
+                    width: compactMobile ? 34 : 42,
+                    height: compactMobile ? 34 : 42,
+                    decoration: const BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                      gradient: LinearGradient(
+                        colors: [
+                          Color(0xFF02569B),
+                          Color(0xFF0175C2),
+                          Color(0xFF00B4AB),
+                        ],
+                      ),
+                    ),
+                    child: Icon(
+                      Icons.pedal_bike,
+                      color: Colors.white,
+                      size: compactMobile ? 19 : 22,
                     ),
                   ),
-                  child: const Icon(Icons.pedal_bike, color: Colors.white),
-                ),
-                SizedBox(width: tiny ? 8 : 10),
-                Flexible(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'PedalPoint',
-                        maxLines: 1,
-                        overflow: TextOverflow.ellipsis,
-                        style: TextStyle(
-                          fontSize: tiny ? 18 : 22,
-                          fontWeight: FontWeight.w900,
-                          color: const Color(0xFF0F172A),
-                        ),
-                      ),
-                      if (!tiny)
-                        const Text(
-                          'CYCLE RENTAL PAKISTAN',
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: 8,
-                            letterSpacing: 1.2,
-                            color: Color(0xFF059669),
-                            fontWeight: FontWeight.w800,
+                  SizedBox(width: compactMobile ? 7 : 10),
+                  Flexible(
+                    child: FittedBox(
+                      fit: BoxFit.scaleDown,
+                      alignment: Alignment.centerLeft,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Text(
+                            'PedalPoint',
+                            maxLines: 1,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: compactMobile ? 16 : 22,
+                              fontWeight: FontWeight.w900,
+                              color: const Color(0xFF0F172A),
+                              height: 1.05,
+                            ),
                           ),
-                        ),
-                    ],
+                          const Text(
+                            'CYCLE RENTAL PAKISTAN',
+                            maxLines: 1,
+                            softWrap: false,
+                            style: TextStyle(
+                              fontSize: 7.5,
+                              letterSpacing: 0.9,
+                              color: Color(0xFF059669),
+                              fontWeight: FontWeight.w800,
+                              height: 1.2,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
-          ),
-          const SizedBox(width: 8),
-          const Spacer(),
-          if (wide)
+          const SizedBox(width: 6),
+          if (wide) ...[
+            const Spacer(),
             Row(
               children: [
                 _nav('Home', onHome),
@@ -610,6 +636,7 @@ class _Header extends StatelessWidget {
                   onPressed: onBookings,
                   icon: const Icon(Icons.receipt_long_outlined, size: 17),
                   label: Row(
+                    mainAxisSize: MainAxisSize.min,
                     children: [
                       const Text('My Rentals'),
                       if (bookingCount > 0) ...[
@@ -619,7 +646,8 @@ class _Header extends StatelessWidget {
                           backgroundColor: const Color(0xFF10B981),
                           child: Text(
                             '$bookingCount',
-                            style: const TextStyle(fontSize: 9, color: Colors.white),
+                            style: const TextStyle(
+                                fontSize: 9, color: Colors.white),
                           ),
                         ),
                       ],
@@ -630,34 +658,51 @@ class _Header extends StatelessWidget {
                 OutlinedButton.icon(
                   onPressed: onLogout,
                   icon: const Icon(Icons.logout, size: 16),
-                  label: Text(userName != null ? userName!.split(' ').first : 'Sign Out'),
+                  label: Text(userName != null
+                      ? userName!.split(' ').first
+                      : 'Sign Out'),
                 ),
               ],
-            )
-          else
+            ),
+          ] else ...[
+            const Spacer(),
             Row(
+              mainAxisSize: MainAxisSize.min,
               children: [
                 IconButton(
                   tooltip: 'My Rentals',
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.all(compactMobile ? 6 : 8),
+                  constraints: const BoxConstraints(),
                   onPressed: onBookings,
                   icon: Badge(
                     isLabelVisible: bookingCount > 0,
                     label: Text('$bookingCount'),
-                    child: const Icon(Icons.receipt_long_outlined),
+                    child: const Icon(Icons.receipt_long_outlined, size: 21),
                   ),
                 ),
+                SizedBox(width: compactMobile ? 2 : 4),
                 IconButton(
                   tooltip: 'Sign Out',
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.all(compactMobile ? 6 : 8),
+                  constraints: const BoxConstraints(),
                   onPressed: onLogout,
-                  icon: const Icon(Icons.logout, color: Color(0xFFDC2626)),
+                  icon: const Icon(Icons.logout,
+                      color: Color(0xFFDC2626), size: 21),
                 ),
+                SizedBox(width: compactMobile ? 2 : 4),
                 IconButton(
                   tooltip: 'Menu',
+                  visualDensity: VisualDensity.compact,
+                  padding: EdgeInsets.all(compactMobile ? 6 : 8),
+                  constraints: const BoxConstraints(),
                   onPressed: onMenu,
-                  icon: const Icon(Icons.menu),
+                  icon: const Icon(Icons.menu, size: 22),
                 ),
               ],
             ),
+          ],
         ],
       ),
     );
@@ -895,15 +940,36 @@ class _HowItWorks extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const steps = [
-      ('1', 'Search & Choose', 'Browse our verified fleet of MTBs, Road, and E-bikes based on your city and riding needs.', 'Pick your city'),
-      ('2', 'Configure & Book', 'Select rental dates, choose safety gear add-ons (Helmet, GPS, Bags), and fill customer details.', 'Instant calculation'),
-      ('3', 'Doorstep or Hub Pickup', 'Collect your cycle from our city hub or opt for doorstep delivery directly to your hotel or home.', 'Verified handover'),
-      ('4', 'Pedal Away!', 'Enjoy your journey with 24/7 roadside assistance. Return the bike at any designated city hub.', 'Hassle-free return'),
+      (
+        '1',
+        'Search & Choose',
+        'Browse our verified fleet of MTBs, Road, and E-bikes based on your city and riding needs.',
+        'Pick your city'
+      ),
+      (
+        '2',
+        'Configure & Book',
+        'Select rental dates, choose safety gear add-ons (Helmet, GPS, Bags), and fill customer details.',
+        'Instant calculation'
+      ),
+      (
+        '3',
+        'Doorstep or Hub Pickup',
+        'Collect your cycle from our city hub or opt for doorstep delivery directly to your hotel or home.',
+        'Verified handover'
+      ),
+      (
+        '4',
+        'Pedal Away!',
+        'Enjoy your journey with 24/7 roadside assistance. Return the bike at any designated city hub.',
+        'Hassle-free return'
+      ),
     ];
 
     return Container(
       color: const Color(0xFFF1F5F9),
-      padding: EdgeInsets.fromLTRB(18, compactPad(context), 18, compactPad(context) + 8),
+      padding: EdgeInsets.fromLTRB(
+          18, compactPad(context), 18, compactPad(context) + 8),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1180),
@@ -912,13 +978,18 @@ class _HowItWorks extends StatelessWidget {
               const SectionTitle(
                 eyebrow: 'Simple Rental Process',
                 title: 'How PedalPoint Works',
-                description: 'Get riding in four simple steps anywhere in Pakistan.',
+                description:
+                    'Get riding in four simple steps anywhere in Pakistan.',
                 centered: true,
               ),
               const SizedBox(height: 42),
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final cols = constraints.maxWidth >= 900 ? 4 : constraints.maxWidth >= 600 ? 2 : 1;
+                  final cols = constraints.maxWidth >= 900
+                      ? 4
+                      : constraints.maxWidth >= 600
+                          ? 2
+                          : 1;
                   return _ResponsiveGrid(
                     columns: cols,
                     spacing: 18,
@@ -1005,15 +1076,32 @@ class _Features extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const items = [
-      (Icons.local_shipping_outlined, 'Doorstep Delivery', 'We deliver tuned cycles straight to your residence or hotel across Lahore, Islamabad, Skardu & Hunza.'),
-      (Icons.build_outlined, 'Certified Maintenance', 'Every bicycle undergoes a rigorous 25-point mechanical tune-up including hydraulic disc brake inspection.'),
-      (Icons.phone_in_talk_outlined, '24/7 Roadside Assistance', 'Experiencing a flat tire or chain drop? Our mobile mechanics dispatch to your exact location fast.'),
-      (Icons.schedule, 'Flexible Hourly & Daily Rates', 'Rent for 4 hours for a quick city tour or up to 30 days for extended northern mountain expeditions.'),
+      (
+        Icons.local_shipping_outlined,
+        'Doorstep Delivery',
+        'We deliver tuned cycles straight to your residence or hotel across Lahore, Islamabad, Skardu & Hunza.'
+      ),
+      (
+        Icons.build_outlined,
+        'Certified Maintenance',
+        'Every bicycle undergoes a rigorous 25-point mechanical tune-up including hydraulic disc brake inspection.'
+      ),
+      (
+        Icons.phone_in_talk_outlined,
+        '24/7 Roadside Assistance',
+        'Experiencing a flat tire or chain drop? Our mobile mechanics dispatch to your exact location fast.'
+      ),
+      (
+        Icons.schedule,
+        'Flexible Hourly & Daily Rates',
+        'Rent for 4 hours for a quick city tour or up to 30 days for extended northern mountain expeditions.'
+      ),
     ];
 
     return Container(
       color: Colors.white,
-      padding: EdgeInsets.fromLTRB(18, compactPad(context), 18, compactPad(context) + 8),
+      padding: EdgeInsets.fromLTRB(
+          18, compactPad(context), 18, compactPad(context) + 8),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1180),
@@ -1022,59 +1110,65 @@ class _Features extends StatelessWidget {
               const SectionTitle(
                 eyebrow: 'The PedalPoint Advantage',
                 title: 'Why Choose PedalPoint?',
-                description: 'Built specifically for cycling enthusiasts and eco-friendly travelers across Pakistan.',
+                description:
+                    'Built specifically for cycling enthusiasts and eco-friendly travelers across Pakistan.',
                 centered: true,
               ),
               const SizedBox(height: 42),
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final cols = constraints.maxWidth >= 1000 ? 4 : constraints.maxWidth >= 600 ? 2 : 1;
+                  final cols = constraints.maxWidth >= 1000
+                      ? 4
+                      : constraints.maxWidth >= 600
+                          ? 2
+                          : 1;
                   return _ResponsiveGrid(
                     columns: cols,
                     spacing: 16,
                     children: [
                       for (final item in items)
                         Card(
-                        elevation: 0,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                          side: const BorderSide(color: Color(0xFFE2E8F0)),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(22),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                width: 48,
-                                height: 48,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFEFF8FF),
-                                  borderRadius: BorderRadius.circular(14),
-                                ),
-                                child: Icon(item.$1, color: const Color(0xFF0175C2)),
-                              ),
-                              const SizedBox(height: 16),
-                              Text(
-                                item.$2,
-                                style: const TextStyle(
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w800,
-                                  color: Color(0xFF0F172A),
-                                ),
-                              ),
-                              const SizedBox(height: 8),
-                              Text(
-                                item.$3,
-                                style: const TextStyle(
-                                  fontSize: 12,
-                                  height: 1.5,
-                                  color: Color(0xFF64748B),
-                                ),
-                              ),
-                            ],
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20),
+                            side: const BorderSide(color: Color(0xFFE2E8F0)),
                           ),
-                        ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(22),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 48,
+                                  height: 48,
+                                  decoration: BoxDecoration(
+                                    color: const Color(0xFFEFF8FF),
+                                    borderRadius: BorderRadius.circular(14),
+                                  ),
+                                  child: Icon(item.$1,
+                                      color: const Color(0xFF0175C2)),
+                                ),
+                                const SizedBox(height: 16),
+                                Text(
+                                  item.$2,
+                                  style: const TextStyle(
+                                    fontSize: 17,
+                                    fontWeight: FontWeight.w800,
+                                    color: Color(0xFF0F172A),
+                                  ),
+                                ),
+                                const SizedBox(height: 8),
+                                Text(
+                                  item.$3,
+                                  style: const TextStyle(
+                                    fontSize: 12,
+                                    height: 1.5,
+                                    color: Color(0xFF64748B),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                     ],
                   );
@@ -1094,14 +1188,30 @@ class _Reviews extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     const reviews = [
-      ('SA', 'Saad Ali', 'Islamabad • Rented Mountain MTB', 'Rented two Trek Marlin MTBs for a 4-day trip in Skardu. The bikes were exceptionally well tuned, smooth gears, and included helmets & mini-pumps. Best rental service in Pakistan!'),
-      ('MA', 'Mariam Ahmed', 'Lahore • Rented Electric E-Bike', 'The E-bike made exploring Lahore\'s Gulberg and Old City effortless! Delivery was right on time at my hotel. Will definitely rent again.'),
-      ('BH', 'Bilal Hassan', 'Peshawar • Rented City Hybrid', 'Awesome experience in Hunza Valley! The GPS tracker and pannier bags add-ons made our bike touring super convenient. 10/10 service.'),
+      (
+        'SA',
+        'Saad Ali',
+        'Islamabad • Rented Mountain MTB',
+        'Rented two Trek Marlin MTBs for a 4-day trip in Skardu. The bikes were exceptionally well tuned, smooth gears, and included helmets & mini-pumps. Best rental service in Pakistan!'
+      ),
+      (
+        'MA',
+        'Mariam Ahmed',
+        'Lahore • Rented Electric E-Bike',
+        'The E-bike made exploring Lahore\'s Gulberg and Old City effortless! Delivery was right on time at my hotel. Will definitely rent again.'
+      ),
+      (
+        'BH',
+        'Bilal Hassan',
+        'Peshawar • Rented City Hybrid',
+        'Awesome experience in Hunza Valley! The GPS tracker and pannier bags add-ons made our bike touring super convenient. 10/10 service.'
+      ),
     ];
 
     return Container(
       color: const Color(0xFF0F172A),
-      padding: EdgeInsets.fromLTRB(18, compactPad(context), 18, compactPad(context) + 8),
+      padding: EdgeInsets.fromLTRB(
+          18, compactPad(context), 18, compactPad(context) + 8),
       child: Center(
         child: ConstrainedBox(
           constraints: const BoxConstraints(maxWidth: 1180),
@@ -1129,86 +1239,91 @@ class _Reviews extends StatelessWidget {
               const SizedBox(height: 42),
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final cols = constraints.maxWidth >= 900 ? 3 : constraints.maxWidth >= 600 ? 2 : 1;
+                  final cols = constraints.maxWidth >= 900
+                      ? 3
+                      : constraints.maxWidth >= 600
+                          ? 2
+                          : 1;
                   return _ResponsiveGrid(
                     columns: cols,
                     spacing: 18,
                     children: [
                       for (final r in reviews)
-                      Container(
-                        padding: const EdgeInsets.all(22),
-                        decoration: BoxDecoration(
-                          color: const Color(0xFF1E293B),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(color: const Color(0xFF334155)),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              '★★★★★',
-                              style: TextStyle(
-                                color: Color(0xFFFBBF24),
-                                fontSize: 13,
-                                letterSpacing: 2,
-                              ),
-                            ),
-                            const SizedBox(height: 14),
-                            Text(
-                              '"${r.$4}"',
-                              style: const TextStyle(
-                                color: Color(0xFFCBD5E1),
-                                fontSize: 12,
-                                height: 1.6,
-                                fontStyle: FontStyle.italic,
-                              ),
-                            ),
-                            const SizedBox(height: 12),
-                            const Divider(color: Color(0xFF334155)),
-                            const SizedBox(height: 8),
-                            Row(
-                              children: [
-                                CircleAvatar(
-                                  radius: 20,
-                                  backgroundColor: const Color(0xFF0175C2),
-                                  child: Text(
-                                    r.$1,
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 12,
-                                      fontWeight: FontWeight.w800,
-                                    ),
-                                  ),
+                        Container(
+                          padding: const EdgeInsets.all(22),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF1E293B),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(color: const Color(0xFF334155)),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                '★★★★★',
+                                style: TextStyle(
+                                  color: Color(0xFFFBBF24),
+                                  fontSize: 13,
+                                  letterSpacing: 2,
                                 ),
-                                const SizedBox(width: 10),
-                                Expanded(
-                                  child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      r.$2,
+                              ),
+                              const SizedBox(height: 14),
+                              Text(
+                                '"${r.$4}"',
+                                style: const TextStyle(
+                                  color: Color(0xFFCBD5E1),
+                                  fontSize: 12,
+                                  height: 1.6,
+                                  fontStyle: FontStyle.italic,
+                                ),
+                              ),
+                              const SizedBox(height: 12),
+                              const Divider(color: Color(0xFF334155)),
+                              const SizedBox(height: 8),
+                              Row(
+                                children: [
+                                  CircleAvatar(
+                                    radius: 20,
+                                    backgroundColor: const Color(0xFF0175C2),
+                                    child: Text(
+                                      r.$1,
                                       style: const TextStyle(
                                         color: Colors.white,
                                         fontSize: 12,
                                         fontWeight: FontWeight.w800,
                                       ),
                                     ),
-                                    const SizedBox(height: 2),
-                                    Text(
-                                      r.$3,
-                                      style: const TextStyle(
-                                        color: Color(0xFF94A3B8),
-                                        fontSize: 10,
-                                      ),
-                                    ),
-                                  ],
                                   ),
-                                ),
-                              ],
-                            ),
-                          ],
+                                  const SizedBox(width: 10),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          r.$2,
+                                          style: const TextStyle(
+                                            color: Colors.white,
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w800,
+                                          ),
+                                        ),
+                                        const SizedBox(height: 2),
+                                        Text(
+                                          r.$3,
+                                          style: const TextStyle(
+                                            color: Color(0xFF94A3B8),
+                                            fontSize: 10,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
                         ),
-                      ),
                     ],
                   );
                 },
@@ -1236,7 +1351,11 @@ class _Footer extends StatelessWidget {
             children: [
               LayoutBuilder(
                 builder: (context, constraints) {
-                  final cols = constraints.maxWidth >= 900 ? 4 : constraints.maxWidth >= 600 ? 2 : 1;
+                  final cols = constraints.maxWidth >= 900
+                      ? 4
+                      : constraints.maxWidth >= 600
+                          ? 2
+                          : 1;
                   return _ResponsiveGrid(
                     columns: cols,
                     spacing: 30,
@@ -1425,7 +1544,8 @@ class _ReceiptDialog extends StatelessWidget {
                   _receiptRow('Reserved Cycle', booking.bikeTitle),
                   _receiptRow('Pick-Up Hub', booking.city),
                   _receiptRow('Delivery', booking.delivery),
-                  _receiptRow('Rental Dates', '${booking.startDate} to ${booking.endDate}'),
+                  _receiptRow('Rental Dates',
+                      '${booking.startDate} to ${booking.endDate}'),
                   _receiptRow('Duration', '${booking.days} Days'),
                   const SizedBox(height: 12),
                   Container(
@@ -1469,7 +1589,8 @@ class _ReceiptDialog extends StatelessWidget {
                               if (!context.mounted) return;
                               ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(
-                                  content: Text('Could not open print dialog: $e'),
+                                  content:
+                                      Text('Could not open print dialog: $e'),
                                 ),
                               );
                             }
@@ -1554,8 +1675,9 @@ class _ReceiptDialog extends StatelessWidget {
     );
   }
 
-  static String _money(int n) =>
-      n.toString().replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (m) => '${m[1]},');
+  static String _money(int n) => n
+      .toString()
+      .replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (m) => '${m[1]},');
 }
 
 class _BookingsDialog extends StatelessWidget {
@@ -1584,7 +1706,8 @@ class _BookingsDialog extends StatelessWidget {
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(Icons.receipt_long, size: 54, color: Color(0xFFCBD5E1)),
+                    Icon(Icons.receipt_long,
+                        size: 54, color: Color(0xFFCBD5E1)),
                     SizedBox(height: 12),
                     Text(
                       'No rental bookings found yet.',
@@ -1681,8 +1804,9 @@ class _BookingsDialog extends StatelessWidget {
     );
   }
 
-  static String _money(int n) =>
-      n.toString().replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (m) => '${m[1]},');
+  static String _money(int n) => n
+      .toString()
+      .replaceAllMapped(RegExp(r'(\d)(?=(\d{3})+(?!\d))'), (m) => '${m[1]},');
 }
 
 /// Section vertical padding that shrinks on phones.
